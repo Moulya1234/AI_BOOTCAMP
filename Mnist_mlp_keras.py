@@ -5,7 +5,7 @@ from keras.layers import Dense,Flatten
 from keras.datasets import mnist
 from keras.utils import to_categorical
 from keras.optimizers import Adam
-#from keras.optimizers import matplotlotlib
+import matplotlib.pyplot as plt
 (x_train,y_train),(x_test,y_test)=mnist.load_data()
 print(x_train.dtype)
 print(x_train.shape)
@@ -32,7 +32,7 @@ model.add(Dense(128,'relu'))
 model.add(Dense(10,'softmax'))
 
 #compile 
-model.compile(optimizer='adam',loss='categorical_crossentropy',metrics=["accuracy"])
+model.compile(optimizer='Adam',loss='categorical_crossentropy',metrics=["accuracy"])
 #train 
 model.fit(x_train,y_train,epochs=10,batch_size=64)
  
