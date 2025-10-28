@@ -5,14 +5,16 @@ from keras.layers import Dense,Flatten
 from keras.datasets import mnist
 from keras.utils import to_categorical
 from keras.optimizers import Adam
-#from keras.optimizers import matplotlotlib
+import matplotlib.pyplot as plt
+
 (x_train,y_train),(x_test,y_test)=mnist.load_data()
 print(x_train.dtype)
 print(x_train.shape)
 print(y_test.shape)
 print(x_train[0])
-#plt.imshow(x_train[0])
-# plt.show()
+plt.imshow(x_train[0])
+plt.show()
+
 # print("**************")
 print(f"label is : {y_train[0]}")
 
@@ -32,12 +34,31 @@ model.add(Dense(128,'relu'))
 model.add(Dense(10,'softmax'))
 
 #compile 
-model.compile(optimizer='adam',loss='categorical_crossentropy',metrics=["accuracy"])
+model.compile(optimizer='Adam',loss='categorical_crossentropy',metrics=["accuracy"])
 #train 
-model.fit(x_train,y_train,epochs=10,batch_size=64)
- 
+result=model.fit(x_train,y_train,epochs=10,batch_size=64,validation_split=0.2)
+
 #Evaluate
 loss,accuracy=model.evaluate(x_test,y_test)
 print(f"test loss:{loss}")
 print(f"test accuracy:{accuracy}")
+print(result.history.keys())
+print(result.history.values())
+print(result.history)
 
+#visualizatoin
+plt.plot(result.history['val_accuracy'],label="validation accuracy",color="blue")
+plt.plot(result.history['accuracy'],label="train accuracy",color="green")
+plt.title("Train_accuracy VS val_accuracy")
+plt.xlabel("Epochs")
+plt.ylabel("Accuracy")
+plt.legend()
+plt.show()
+
+plt.plot(result.history['val_loss'],label="validation loss",color="blue")
+plt.plot(result.history['loss'],label="train loss",color="green")
+plt.title("Train_Loss VS val_loss")
+plt.xlabel("Epochs")
+plt.ylabel("Loss")
+plt.legend()
+plt.show()
