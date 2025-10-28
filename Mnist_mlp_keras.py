@@ -32,8 +32,10 @@ model.add(Dense(128,'relu'))
 model.add(Dense(10,'softmax'))
 
 #compile 
-model.compile(optimizer='adam',loss='categorical_crossentropy')
+model.compile(optimizer='adam',loss='categorical_crossentropy',metrics=["accuracy"])
 #train 
 model.fit(x_train,y_train,epochs=10,batch_size=64)
-
+ 
+#Evaluate
+model.evaluate(x_test,y_test)
 print("#####%%%###")
